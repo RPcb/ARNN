@@ -11,4 +11,8 @@ Movie1: typhoon prediction.mp4,
 Movie2: traffic prediction.mp4
 
 
-Due to the limited space provided by Github, ask for the source data if necessary.
+Note: 
+For windspeed dataset, unzip the compressed files first, then  
+cat scale_windspeed_PARTa* > scale_windspeed_a.txt   
+M = dlmread('scale_windspeed_a.txt'); %Use a better name that M
+save('scale_windspeed_a.mat', M);
