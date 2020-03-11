@@ -2,19 +2,24 @@
 
 Run ARNN algorithm:
 
-file folder: Main codes
+File folder: Main codes
 
 
 Test the ARNN Robustness:
 
-file folder: Robustness test
+File folder: Robustness test
 
 
-prediction results show:
+Prediction results show:
 
 Movie1: typhoon prediction.mp4, 
 
 Movie2: traffic prediction.mp4
+
+
+Data resources:
+
+Folder: Data, which includes gene expression, HK hospital admission, Ozone(tempreture and SLP), Solar, wind speed, stock, traffic, typhoon dataset.
 
 
 Note: 
