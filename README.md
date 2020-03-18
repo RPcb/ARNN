@@ -12,7 +12,7 @@ File folder: Robustness test
 ***********************************************************************************************************
 Prediction results show:
 
-Lorenz model results,
+"Lorenz results",
 
 Movie1: typhoon prediction.mp4, 
 
