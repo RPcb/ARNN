@@ -11,7 +11,7 @@ Test the ARNN Robustness:
 File folder: Robustness test
 
 ***********************************************************************************************************
-Prediction results show:
+Prediction results:
 
 "Lorenz results",
 
@@ -28,7 +28,7 @@ Folder: Data, which includes gene expression, HK hospital admission, Ozone(tempr
 Note: 
 1. For Lorenz model simulation, 
 
-   noise-free & time-invariant cases:  use "Main codes/mylorenz.m" to generate high-dimensional data, to set ""noisestrength = 0" in "Main codes/ApplicationCode_ARNN.m";
+   noise-free & time-invariant cases:  use "Main codes/mylorenz.m" to generate high-dimensional data, set ""noisestrength = 0" in "Main codes/ApplicationCode_ARNN.m";
    
    noisy & time-invariantcases: use "Main codes/mylorenz.m" to generate high-dimensional data, set "noisestrength" to be 0.5, 2, 4 in "Main codes/ApplicationCode_ARNN.m", respectively;
    
