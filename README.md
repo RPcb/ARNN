@@ -5,7 +5,7 @@ Run ARNN algorithm:
 
 Resource code file folder: Main codes
 
-Use "Main codes/ApplicationCode_ARNN.m" for both Lorenz model simulation and real-world datasets.
+Use "Main codes/ApplicationCode_ARNN.m" for both Lorenz model and real-world datasets.
 
 ***********************************************************************************************************
 Test the ARNN Robustness:
@@ -49,4 +49,4 @@ Note:
    load wind speed data:  "load scaled_windspeed_a" in Matlab;
 
 
-3. For high-dimensional datasets, one can use "Main codes/calcv.m" for variable selection by mutual information.
+3. For high-dimensional datasets, use "Main codes/calcv.m" for variable selection by mutual information or PCC.
