@@ -1,4 +1,5 @@
 # ARNN
+Environment: MATLAB 2019
 
 Run ARNN algorithm:
 
@@ -40,3 +41,5 @@ Note:
    M = dlmread('scale_windspeed_a.txt'); 
 
    save('scale_windspeed_a.mat', M);
+   
+   load wind speed data:  "load scaled_windspeed_a" in matlab;
