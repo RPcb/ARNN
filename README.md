@@ -35,8 +35,8 @@ Note:
 
 2. For windspeed dataset, unzip the compressed files first, then  
 
-cat scale_windspeed_PARTa* > scale_windspeed_a.txt   
+   cat scale_windspeed_PARTa* > scale_windspeed_a.txt   
 
-M = dlmread('scale_windspeed_a.txt'); 
+   M = dlmread('scale_windspeed_a.txt'); 
 
-save('scale_windspeed_a.mat', M);
+   save('scale_windspeed_a.mat', M);
