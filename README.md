@@ -28,11 +28,11 @@ Folder: Data, which includes gene expression, HK hospital admission, Ozone(tempr
 Note: 
 1. For Lorenz model simulation, 
 
-   noise-free & time-invariant cases:  use "Main codes/mylorenz.m" to generate high-dimensional data, to set ""noisestrength = 0" in "Main codes/sample_code_ARNN.m";
+   noise-free & time-invariant cases:  use "Main codes/mylorenz.m" to generate high-dimensional data, to set ""noisestrength = 0" in "Main codes/ApplicationCode_ARNN.m";
    
-   noisy & time-invariantcases: use "Main codes/mylorenz.m" to generate high-dimensional data, set "noisestrength" to be 0.5, 2, 4 in "Main codes/sample_code_ARNN.m", respectively;
+   noisy & time-invariantcases: use "Main codes/mylorenz.m" to generate high-dimensional data, set "noisestrength" to be 0.5, 2, 4 in "Main codes/ApplicationCode_ARNN.m", respectively;
    
-   time-varying cases: use "Main codes/mylorenz_dynamic.m" to generate high-dimensional data, set "noisestrength = 0" in "Main codes/sample_code_ARNN.m".
+   time-varying cases: use "Main codes/mylorenz_dynamic.m" to generate high-dimensional data, set "noisestrength = 0" in "Main codes/ApplicationCode_ARNN.m".
 
 2. For windspeed dataset, unzip the compressed files first, then  
 
@@ -42,4 +42,4 @@ Note:
 
    save('scale_windspeed_a.mat', M);
    
-   load wind speed data:  "load scaled_windspeed_a" in matlab;
+   load wind speed data:  "load scaled_windspeed_a" in Matlab;
