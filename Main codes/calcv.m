@@ -1,16 +1,18 @@
 function CorrVariables = calcv(target, X, flag, cutoff, win_size)
+% Inputs:
+%    target variable: target, size: <1,m>
+%    high dimensional short term data: X, size: <n, m>
+%    flag: PCC, MI
+% Outputs:
+%    The most correlated variables of X with the target variable: CorrVariables
+
 if nargin==3
     cutoff=0.5;
     win_size=10;
 elseif nargin==4
     win_size=10;
 end
-% inputs:
-% target variable: target, size: <1,m>
-% high dimensional short term data: X, size: <n, m>
-% flag: PCC, MI
-% outputs:
-% The most correlated variables of X with the target variable: CorrVariables
+
 clear CorrVariables;
 cvi=0;
 for v=1:size(X,1)
