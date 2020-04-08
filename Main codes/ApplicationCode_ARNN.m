@@ -38,10 +38,15 @@ for ii=ii_set
     
     %%
     %%%%%%%%%%%%%%%%%%%%%%%%%%    ARNN start     %%%%%%%%%%%%%%%%%%%%%%%%%%
-    clear NN_traindata;
-    for i=1:trainlength
-        traindata_x_NN(:,i)=NN_F(traindata(:,i));
-    end
+    
+    ## Given a set of fixed weights for F for each time points: A*F(X^t)=Y^t, F(X^t)=B*(Y^t) 
+    traindata_x_NN=NN_F2(traindata);
+    
+    ## Randomly given a set of weights for F each time points: A*F(X)=Y, F(X)=B*Y
+    # clear NN_traindata;
+    # for i=1:trainlength
+    #    traindata_x_NN(:,i)=NN_F(traindata(:,i));
+    # end
     
     w_flag=zeros(size(traindata_x_NN,1));
     A=zeros(predict_len,size(traindata_x_NN,1));   % matrix A
