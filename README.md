@@ -5,7 +5,7 @@ Run ARNN algorithm:
 
 Resource code file folder: Main codes
 
-Use "Main codes/ApplicationCode_ARNN.m" for both Lorenz model and real-world datasets.
+Use "Main codes/Main_ARNN.m" for both Lorenz model and real-world datasets.
 
 ***********************************************************************************************************
 Test the ARNN Robustness:
@@ -31,11 +31,11 @@ Note:
 
 1. For Lorenz model simulation, there are the following three cases:
 
-   noise-free & time-invariant case:  use "Main codes/mylorenz.m" to generate high-dimensional data, set ""noisestrength = 0" in "Main codes/ApplicationCode_ARNN.m";
+   noise-free & time-invariant case:  use "Main codes/mylorenz.m" to generate high-dimensional data, set ""noisestrength = 0" in "Main codes/Main_ARNN.m";
    
-   noisy & time-invariant case: use "Main codes/mylorenz.m" to generate high-dimensional data, set "noisestrength" to be 0.5, 2, 4 in "Main codes/ApplicationCode_ARNN.m", respectively;
+   noisy & time-invariant case: use "Main codes/mylorenz.m" to generate high-dimensional data, set "noisestrength" to be 0.5, 2, 4 in "Main codes/Main_ARNN.m", respectively;
    
-   time-varying case: use "Main codes/mylorenz_dynamic.m" to generate high-dimensional data, set "noisestrength = 0" in "Main codes/ApplicationCode_ARNN.m".
+   time-varying case: use "Main codes/mylorenz_dynamic.m" to generate high-dimensional data, set "noisestrength = 0" in "Main codes/Main_ARNN.m".
 
 
 2. For windspeed dataset, unzip the compressed files first, then  
