@@ -122,6 +122,7 @@ while ii<3000                    % run each case sequentially with different ini
     
     myreal=real_y(trainlength+1:trainlength+predict_len-1);
     RMSE = sqrt(immse(union_predict_y_ARNN, myreal));
+    RMSE = RMSE /(std(myreal) + 0.001);      % normalized RMSE
     if RMSE < 0.5
         Accurate_predictions = Accurate_predictions + 1;
     end
