@@ -124,7 +124,7 @@ for ii=ii_set
          error(u)=(union_predict_y_ARNN(u)-myreal(u))^2;
     end
     RMSE=sqrt(sum(error))/(predict_len-1);
-    RMSE = RMSE /(std(myreal) + 0.001);      % normalized RMSE
+    RMSE = RMSE /(std(real_y(trainlength+1-2*predict_len:trainlength+predict_len-1)) + 0.001);      % normalized RMSE
     
     refx=X(2000+ii-150:size(X,1),:)';          %  Lorenz reference
     
