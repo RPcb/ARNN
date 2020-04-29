@@ -19,21 +19,24 @@ ii=0;
 while ii<3000                    % run each case sequentially with different initials
     ii = ii+2;      
     disp(['Case number: ', num2str(ii/2)]);       %init
-    trainlength=11;         %  length of training data (observed data), m
+    INPUT_trainlength=11;         %  length of training data (observed data), m > 2L
     xx=X(2000+ii:size(X,1),:)';       % after transient dynamics
     noisestrength=0;   % strength of noise
     xx_noise=xx+noisestrength*rand(size(xx));
     
-    traindata=xx_noise(:,1:trainlength);
-    
-    k=60;  % embedding dimension, which could be determined using FNN or set empirically
-    
     predict_len=5;     % L
+    
+    %traindata=xx_noise(:,1:trainlength);
+    % use the most recent short term high-dimensional time-series to predict
+    traindata = xx_noise(:, max(1,INPUT_trainlength-3*predict_len):INPUT_trainlength);   
+    trainlength=size(traindata,2);
+    k=60;  % embedding dimension, which could be determined using FNN or set empirically
     
     jd=1; % the index of target variable
     
     D=size(xx_noise,1);     % number of variables in the system.
-    real_y=xx(jd,:);
+    origin_real_y=xx(jd,:);
+    real_y=xx(jd,max(1,INPUT_trainlength-3*predict_len):end);
     real_y_noise=real_y+noisestrength*rand(size(real_y));
     traindata_y=real_y_noise(1:trainlength);
     
@@ -122,7 +125,7 @@ while ii<3000                    % run each case sequentially with different ini
     
     myreal=real_y(trainlength+1:trainlength+predict_len-1);
     RMSE = sqrt(immse(union_predict_y_ARNN, myreal));
-    RMSE = RMSE /(std(real_y(trainlength+1-2*predict_len:trainlength+predict_len-1)) + 0.001);      % normalized RMSE
+    RMSE = RMSE/(std(real_y(trainlength+1-2*predict_len:trainlength+predict_len-1))+0.001);          % normalize RMSE
     if RMSE < 0.5
         Accurate_predictions = Accurate_predictions + 1;
     end
@@ -136,22 +139,19 @@ while ii<3000                    % run each case sequentially with different ini
     subplot(2,1,1);
     plot(refx(jd,1:150),'c-*','LineWidth',2,'MarkerSize',4);
     hold on;
-    plot([101:100+trainlength],real_y(1:trainlength),'-*','LineWidth',2,'MarkerSize',4);
+    plot([101:100+INPUT_trainlength],origin_real_y(1:INPUT_trainlength),'-*','LineWidth',2,'MarkerSize',4);
     title(['\fontsize{18}original attractor. Init: ', num2str(ii),', Noise strength: ',num2str(noisestrength)]);
     set(gca,'FontSize',10);
     hold off;
     
     subplot(2,1,2);
-    plot([1:trainlength],real_y_noise(1:trainlength),'-*','LineWidth',2,'MarkerSize',4);
+    plot([1:INPUT_trainlength],origin_real_y(1:INPUT_trainlength),'-*','LineWidth',2,'MarkerSize',4);
     hold on;
-    plot([trainlength+1:trainlength+predict_len-1],real_y_noise(trainlength+1:trainlength+predict_len-1),'c-p','MarkerSize',4,'LineWidth',2);
+    plot([INPUT_trainlength+1:INPUT_trainlength+predict_len-1],origin_real_y(INPUT_trainlength+1:INPUT_trainlength+predict_len-1),'c-p','MarkerSize',4,'LineWidth',2);
     hold on;
-    plot([trainlength+1:trainlength+predict_len-1],union_predict_y_ARNN,'ro','MarkerSize',5,'LineWidth',2);
-    title(['\fontsize{18}ARNN Union Pred:  m=',num2str(trainlength),', L=',num2str(predict_len),', RMSE=',num2str(RMSE)]);
+    plot([INPUT_trainlength+1:INPUT_trainlength+predict_len-1],union_predict_y_ARNN,'ro','MarkerSize',5,'LineWidth',2);
+    title(['\fontsize{18}ARNN Union Pred:  KnownLen=',num2str(trainlength),', PredLen=',num2str(predict_len)-1,', RMSE=',num2str(RMSE)]);
     set(gca,'FontSize',10);
     hold off;
-    
     pause(1);
 end
-
-
