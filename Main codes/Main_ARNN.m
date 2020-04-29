@@ -131,7 +131,7 @@ while ii<3000                    % run each case sequentially with different ini
     end
     Accurate_prediction_rate = Accurate_predictions/(ii/2);
     disp(['Accurate_prediction_rate: ', num2str(Accurate_prediction_rate)]);
-    disp('');
+    disp(' ');
     
     refx=X(2000+ii-100:size(X,1),:)';          %  Lorenz reference
     
