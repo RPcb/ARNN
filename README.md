@@ -33,7 +33,7 @@ Note:
 
    noise-free & time-invariant case:  use "Main codes/mylorenz.m" to generate high-dimensional data, set ""noisestrength = 0" in "Main codes/Main_ARNN.m";
    
-   noisy & time-invariant case: use "Main codes/mylorenz.m" to generate high-dimensional data, set "noisestrength" to be 0.5, 2, 4 in "Main codes/Main_ARNN.m", respectively;
+   noisy & time-invariant case: use "Main codes/mylorenz.m" to generate high-dimensional data, set "noisestrength" to be 0.1-1.0 in "Main codes/Main_ARNN.m", respectively;
    
    time-varying case: use "Main codes/mylorenz_dynamic.m" to generate high-dimensional data, set "noisestrength = 0" in "Main codes/Main_ARNN.m".
 
