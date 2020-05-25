@@ -1,9 +1,10 @@
 # ARNN
+
 1. System requirements
 
 a. The codes can be run within MATLAB environment on any operating system.
 
-b. We implemented the codes with MATLAB R2019b on Windows10/mac/unbuntu.
+b. We implemented the codes with MATLAB R2019b on Mac/Unbuntu.
 
 c. No non-standard hardware is required.
 
