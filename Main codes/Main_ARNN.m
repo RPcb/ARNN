@@ -20,7 +20,8 @@ while ii<3000                    % run each case sequentially with different ini
     ii = ii+2;      
     disp(['Case number: ', num2str(ii/2)]);       %init
     INPUT_trainlength=11;         %  length of training data (observed data), m > 2L
-    xx=X(2000+ii:size(X,1),:)';       % after transient dynamics
+    selected_variables_idx=[1:90];              % selected the most correlated variables, [1:90] can be changed by personalized methods
+    xx=X(2000+ii:size(X,1),selected_variables_idx)';       % after transient dynamics
     noisestrength=0;   % strength of noise
     xx_noise=xx+noisestrength*rand(size(xx));
     
@@ -30,7 +31,7 @@ while ii<3000                    % run each case sequentially with different ini
     % use the most recent short term high-dimensional time-series to predict
     traindata = xx_noise(:, max(1,INPUT_trainlength-3*predict_len):INPUT_trainlength);   
     trainlength=size(traindata,2);
-    k=60;  % embedding dimension, which could be determined using FNN or set empirically
+    k=60;  % randomly selected variables of matrix B
     
     jd=1; % the index of target variable
     
