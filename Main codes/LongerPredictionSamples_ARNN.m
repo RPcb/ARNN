@@ -15,11 +15,14 @@ noisestrength=0;
 X=Y+noisestrength*rand(size(Y));% noise could be added
 
 ii=0;
-ii_set=[224,1558,1560,1898,1960,2218,1586,1556];   %sample init, can be changed
+ii_set=[2222,2195,211, 31,327,335,781,939, 2241,2247];   %sample init, can be changed; 
+% the results of 2222,2195,211 cases are shown in Fig. 2d, 2e, 2f of the main text.
+
 for ii=ii_set
     ii          % init
     trainlength=50;         %  length of training data (observed data), m
-    xx=X(2000+ii+50-trainlength:size(X,1),:)';       % after transient dynamics
+    selected_variables_idx=[1:90];              % selected the most correlated variables, [1:90] can be changed by personalized methods
+    xx=X(2000+ii:size(X,1),selected_variables_idx)';       % after transient dynamics
     noisestrength=0;   % strength of noise
     xx_noise=xx+noisestrength*rand(size(xx));
     
