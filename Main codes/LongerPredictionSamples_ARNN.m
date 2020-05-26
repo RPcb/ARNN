@@ -28,7 +28,7 @@ for ii=ii_set
     
     traindata=xx_noise(:,1:trainlength);
     
-    k=60;  % embedding dimension, which could be determined using FNN or set empirically
+    k=60;  % randomly selected variables of matrix B
     
     predict_len=19;     % L
     
