@@ -5,8 +5,9 @@ stepsize=0.02;
 l=round(time/stepsize);
 %N=12;
 x=zeros(3*N,l);
-% x(:,1)=rand(1,3*N);
-x(:,1)=0.1*ones(1,3*N);
+x(1:3,1)=0.1*ones(3,1);
+x(4:end,1)=0.1*rand(3*(N-1),1);
+x(1+(N-1)*3,1)=0.1*ones(1);
 % Lorenz system
 C=0.1;
 
