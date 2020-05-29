@@ -140,13 +140,13 @@ while ii<3000                    % run each case sequentially with different ini
     subplot(2,1,1);
     plot(refx(jd,1:150),'c-*','LineWidth',2,'MarkerSize',4);
     hold on;
-    plot([101:100+INPUT_trainlength],origin_real_y(1:INPUT_trainlength),'-*','LineWidth',2,'MarkerSize',4);
+    plot([101:100+INPUT_trainlength],origin_real_y(1:INPUT_trainlength),'b-*','LineWidth',2,'MarkerSize',4);
     title(['\fontsize{18}original attractor. Init: ', num2str(ii),', Noise strength: ',num2str(noisestrength)]);
     set(gca,'FontSize',10);
     hold off;
     
     subplot(2,1,2);
-    plot([1:INPUT_trainlength],origin_real_y(1:INPUT_trainlength),'-*','LineWidth',2,'MarkerSize',4);
+    plot([1:INPUT_trainlength],origin_real_y(1:INPUT_trainlength),'b-*','LineWidth',2,'MarkerSize',4);
     hold on;
     plot([INPUT_trainlength+1:INPUT_trainlength+predict_len-1],origin_real_y(INPUT_trainlength+1:INPUT_trainlength+predict_len-1),'c-p','MarkerSize',4,'LineWidth',2);
     hold on;
