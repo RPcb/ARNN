@@ -5,13 +5,14 @@ stepsize=0.02;
 l=round(time/stepsize);
 %N=12;
 x=zeros(3*N,l);
+
 x(:,1)=-0.1:0.003:(-0.1+0.003*(3*N-1));
 % Lorenz system
 C=0.1;
 
 for i=1:l-1
     
-    x(1,i+1)=x(1,i)+stepsize*(10*(x(2,i)-x(1,i))+C*x(1,i));
+    x(1,i+1)=x(1,i)+stepsize*(10*(x(2,i)-x(1,i))+C*x(1+(N-1)*3,i));
     x(2,i+1)=x(2,i)+stepsize*(28*x(1,i)-x(2,i)-x(1,i)*x(3,i));
     x(3,i+1)=x(3,i)+stepsize*(-8/3*x(3,i)+x(1,i)*x(2,i));
     for j=1:N-1
