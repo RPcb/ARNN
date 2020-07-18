@@ -16,12 +16,12 @@ X=Y+noisestrength*rand(size(Y));% noise could be added
 
 Accurate_predictions=0;
 ii=0;
-while ii<3000                    % run each case sequentially with different initials
+while ii<2000                    % run each case sequentially with different initials
     ii = ii+2;      
     disp(['Case number: ', num2str(ii/2)]);       %init
     INPUT_trainlength=11;         %  length of training data (observed data), m > 2L
     selected_variables_idx=[1:90];              % selected the most correlated variables, [1:90] can be changed by personalized methods
-    xx=X(2000+ii:size(X,1),selected_variables_idx)';       % after transient dynamics
+    xx=X(3000+ii:size(X,1),selected_variables_idx)';       % after transient dynamics
     noisestrength=0;   % strength of noise
     xx_noise=xx+noisestrength*rand(size(xx));
     
@@ -44,7 +44,7 @@ while ii<3000                    % run each case sequentially with different ini
     %%
     %%%%%%%%%%%%%%%%%%%%%%%%%%    ARNN start     %%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    %%% Given a set of fixed weights for F for each time points: A*F(X^t)=Y^t, F(X^t)=B*(Y^t) 
+    %%% Given a set of fixed weights for F for each time points: A*F(X^t)=Y^t, F(X^t)=B*(Y^t)
     traindata_x_NN=NN_F2(traindata);
     
     %%% Randomly given a set of weights for F each time points: A*F(X)=Y, F(X)=B*Y
@@ -56,7 +56,12 @@ while ii<3000                    % run each case sequentially with different ini
     w_flag=zeros(size(traindata_x_NN,1));
     A=zeros(predict_len,size(traindata_x_NN,1));   % matrix A
     B=zeros(size(traindata_x_NN,1),predict_len);   % matrix B
+    
+    predict_pred=rand(1,predict_len-1);
+    
+    %  End of ITERATION 1:  sufficient iterations
     for iter=1:1000         % cal coeffcient B
+        
         random_idx=sort([jd,randsample(setdiff(1:size(traindata_x_NN,1),jd),k-1)]);
         traindata_x=traindata_x_NN(random_idx,1:trainlength);        % random chose k variables from F(D)
         
@@ -72,55 +77,61 @@ while ii<3000                    % run each case sequentially with different ini
             B(random_idx(i),:)=(B(random_idx(i),:)+B_para+B_para*(1-w_flag(random_idx(i))))/2;
             w_flag(random_idx(i))=1;
         end
-       
-    end
-    
-    %%
-    %%%%%%%%%%%%%%%%%%%%%%%%%%  side prediction based on B  %%%%%%%%%%%%%%%%%%%%%%%%%
-    clear super_bb super_AA;
-    for i=1:size(traindata_x_NN,1)
-        kt=0;
-        clear bb;
-        AA=zeros(predict_len-1,predict_len-1);
-        for j=(trainlength-(predict_len-1))+1:trainlength
-            kt=kt+1;
-            bb(kt)=traindata_x_NN(i,j);
-            %col_unknown_y_num=j-(trainlength-(predict_len-1));
-            col_known_y_num=trainlength-j+1;
-            for r=1:col_known_y_num
-                bb(kt)=bb(kt)-B(i,r)*traindata_y(trainlength-col_known_y_num+r);
+        
+        %%%%%%%%%%%%%%%%%%%%%%%%%%  tmp predict based on B  %%%%%%%%%%%%%%%%%%%%%%%%%
+        clear super_bb super_AA;
+        for i=1:size(traindata_x_NN,1)
+            kt=0;
+            clear bb;
+            AA=zeros(predict_len-1,predict_len-1);
+            for j=(trainlength-(predict_len-1))+1:trainlength
+                kt=kt+1;
+                bb(kt)=traindata_x_NN(i,j);
+                %col_unknown_y_num=j-(trainlength-(predict_len-1));
+                col_known_y_num=trainlength-j+1;
+                for r=1:col_known_y_num
+                    bb(kt)=bb(kt)-B(i,r)*traindata_y(trainlength-col_known_y_num+r);
+                end
+                AA(kt,1:predict_len-col_known_y_num)=B(i,col_known_y_num+1:predict_len);
             end
-            AA(kt,1:predict_len-col_known_y_num)=B(i,col_known_y_num+1:predict_len);
+            
+            super_bb((predict_len-1)*(i-1)+1:(predict_len-1)*(i-1)+predict_len-1)=bb;
+            super_AA((predict_len-1)*(i-1)+1:(predict_len-1)*(i-1)+predict_len-1,:)=AA;
         end
         
-        super_bb((predict_len-1)*(i-1)+1:(predict_len-1)*(i-1)+predict_len-1)=bb;
-        super_AA((predict_len-1)*(i-1)+1:(predict_len-1)*(i-1)+predict_len-1,:)=AA;
+        pred_y_tmp=(super_AA\super_bb')';
+        
+  
+        %%%%%%%%%%%%%%%%%%%%%    update the values of matrix A and Y     %%%%%%%%%%%%%%%%
+        tmp_y=[real_y(1:trainlength), pred_y_tmp];
+        for j=1:predict_len
+            Ym(j,:)=tmp_y(j:j+trainlength-1);
+        end
+        BX=[B,traindata_x_NN];
+        IY=[eye(predict_len),Ym];
+        A=IY*pinv(BX);
+        clear  union_predict_y_NN;
+        for j1=1:predict_len-1
+            tmp_y=zeros(predict_len-j1,1);
+            kt=0;
+            for j2=j1:predict_len-1
+                kt=kt+1;
+                row=j2+1;
+                col=trainlength-j2+j1;
+                tmp_y(kt)=A(row,:)*traindata_x_NN(:,col);
+            end
+            union_predict_y_ARNN(j1)=mean(tmp_y);
+        end
+        
+        %  End of ITERATION 2: the predicting result converges.
+        eof_error=sqrt(immse(union_predict_y_ARNN, predict_pred));
+        if eof_error<0.0001
+            break
+        end
+        
+        predict_pred=union_predict_y_ARNN;
+        
     end
-
-    pred_y_tmp=(super_AA\super_bb')';
-    
-    %%
-    %%%%%%%%%%%%%%%%%%%%%%%%%%  Final prediction  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    tmp_y=[real_y(1:trainlength), pred_y_tmp];
-    for j=1:predict_len
-        Ym(j,:)=tmp_y(j:j+trainlength-1);
-    end
-    BX=[B,traindata_x_NN];
-    IY=[eye(predict_len),Ym];
-    A=IY*pinv(BX);
-    clear  union_predict_y_NN;
-    for j1=1:predict_len-1
-        tmp_y=zeros(predict_len-j1,1);
-        kt=0;
-        for j2=j1:predict_len-1
-            kt=kt+1;
-            row=j2+1;
-            col=trainlength-j2+j1;
-            tmp_y(kt)=A(row,:)*traindata_x_NN(:,col);
-        end     
-        union_predict_y_ARNN(j1)=mean(tmp_y);
-    end
-    
     %%
     %%%%%%%%%%%%%%%%%%%%%%%      result display    %%%%%%%%%%%%%%%%%%%%%%
     
@@ -134,7 +145,7 @@ while ii<3000                    % run each case sequentially with different ini
     disp(['Accurate_prediction_rate: ', num2str(Accurate_prediction_rate)]);
     disp(' ');
     
-    refx=X(2000+ii-100:size(X,1),:)';          %  Lorenz reference
+    refx=X(3000+ii-100:size(X,1),:)';          %  Lorenz reference
     
     figure(1);
     subplot(2,1,1);
