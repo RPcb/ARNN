@@ -55,7 +55,7 @@ for ii=ii_set
     A=zeros(predict_len,size(traindata_x_NN,1));   % matrix A
     B=zeros(size(traindata_x_NN,1),predict_len);   % matrix B
     
-    predict_pred=rand(1,predict_len-1);
+    predict_pred=zeros(1,predict_len-1);
     
     %  End of ITERATION 1:  sufficient iterations
     for iter=1:1000         % cal coeffcient B
