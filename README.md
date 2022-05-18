@@ -82,4 +82,8 @@ Data resources:
 
 Folder: Data, which includes gene expression, HK hospital admission, Ozone(tempreture and SLP), Solar, wind speed, stock, traffic, typhoon dataset.
 
+***********************************************************************************************************
 
+Citation:
+
+"Chen P, Liu R, Aihara K, et al. Autoreservoir computing for multistep ahead prediction based on the spatiotemporal information transformation[J]. Nature communications, 2020, 11(1): 1-15."
