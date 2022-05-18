@@ -1,5 +1,13 @@
 # ARNN
 
+***********************************************************************************************************
+
+Citation:
+
+"Chen P, Liu R, Aihara K, et al. Autoreservoir computing for multistep ahead prediction based on the spatiotemporal information transformation[J]. Nature communications, 2020, 11(1): 1-15."
+
+***********************************************************************************************************
+
 1. System requirements
 
 a. The codes can be run within MATLAB environment on any operating system.
@@ -84,6 +92,3 @@ Folder: Data, which includes gene expression, HK hospital admission, Ozone(tempr
 
 ***********************************************************************************************************
 
-Citation:
-
-"Chen P, Liu R, Aihara K, et al. Autoreservoir computing for multistep ahead prediction based on the spatiotemporal information transformation[J]. Nature communications, 2020, 11(1): 1-15."
